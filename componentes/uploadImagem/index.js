@@ -14,7 +14,7 @@ import { useEffect, useRef } from "react";
             return;
         }
 
-        aoSetarAReferencia(referenciaInput?.current);
+        aoSetarAReferencia(referenciaInput?.current)
     },[referenciaInput?.current]);
 
     const abrirSeletorArquivos = () => {
@@ -45,7 +45,7 @@ import { useEffect, useRef } from "react";
         }
 
     return (
-        <div className={`uploadImagemContainer ${className}`} onCLick={abrirSeletorArquivos}>
+        <div className={`uploadImagemContainer ${className}`} onClick={abrirSeletorArquivos}>
             {imagemPreview && (
                 <div className="imagemPreviewContainer">
                     <img
