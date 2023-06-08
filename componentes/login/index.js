@@ -4,20 +4,47 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { validarEmail, validarSenha } from "../../utils/validadores"
+import UsuarioService from "../../services/UsuarioService";
 
 import imagemEnvelope from "../../public/imagens/envelope.svg"
 import imagemChave from "../../public/imagens/chave.svg"
 import imagemLogo from "../../public/imagens/logo.svg"
 
+const usuarioService = new UsuarioService();
+
 export default function Login() {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
+    const [estaSubmetendo, setEstaSubmetendo] = useState(false);
 
     const validarFormulario = () => {
         return(
             validarEmail(email)
             && validarSenha(senha)
         );
+    }
+
+    const aoSubmeter = async (e) => {
+        e.preventDefault();
+        if (!validarFormulario()) {
+            return;
+        }
+
+        setEstaSubmetendo(true);
+
+        try{
+            await usuarioService.login({
+                login: email,
+                senha
+            });
+
+        } catch (error) {
+            alert(
+                "Erro ao realizar login." + error?.response?.data?.erro
+            );
+        }
+
+        setEstaSubmetendo(false);
     }
 
     return (
@@ -31,7 +58,7 @@ export default function Login() {
                 />
             </div>
             <div className="conteudoPaginaPublica">
-                <form>
+                <form onSubmit={aoSubmeter}>
                     <InputPublico
                         imagem={imagemEnvelope}
                         texto="E-mail"
@@ -53,8 +80,8 @@ export default function Login() {
 
                     <Botao
                         texto="Login"
-                        tipo="submit"
-                        desabilitado={!validarFormulario()}
+                        type="submit"
+                        desabilitado={!validarFormulario() || estaSubmetendo}
                     />
 
                 </form>

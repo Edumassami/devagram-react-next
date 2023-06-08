@@ -11,7 +11,7 @@ import imagemLogo from "../../public/imagens/logo.svg"
 import imagemUsuarioAtivo from "../../public/imagens/usuarioAtivo.svg"
 import imagemEnvelope from "../../public/imagens/envelope.svg"
 import imagemChave from "../../public/imagens/chave.svg"
-import imagemAvatar from "../../public/imagens/avatar.svg"
+    import imagemAvatar from "../../public/imagens/avatar.svg"
 
 const usuarioService = new UsuarioService();
 
@@ -51,7 +51,6 @@ export default function Cadastro() {
             }
 
             await usuarioService.cadastro(corpoReqCadastro);
-            router.push('/')
             alert("Sucesso!");
         } catch (error){
             alert(
