@@ -1,9 +1,48 @@
 import Image from 'next/image';
+import { useState } from 'react';
 import imagemLogoHorizontal from '../../public/imagens/logoHorizontal.svg'
 import imagemLupa from '../../public/imagens/lupa.svg'
 import Navegacao from './Navegacao';
+import ResultadoPesquisa from './ResultadoPesquisa';
 
 export default function Cabecalho() {
+    const [resultadoPesquisa, setResultadoPesquisa] = useState([]);
+    const [termoPesquisado, setTermoPesquisado] = useState([]);
+
+    const aoPesquisar = (e) => {
+        setTermoPesquisado(e.target.value);
+        setResultadoPesquisa([]);
+
+        if (termoPesquisado.length < 3) {
+            return;
+        }
+
+        setResultadoPesquisa([
+            {
+                avatar: '',
+                nome: 'Eduardo',
+                email: 'eduardo@email.com',
+                _id: '12345'
+            },
+            {
+                avatar: '',
+                nome: 'Miguel',
+                email: 'miguel@email.com',
+                _id: '123456'
+            },
+            {
+                avatar: '',
+                nome: 'Ana Paula',
+                email: 'anapaul@email.com',
+                _id: '1234567'
+            }
+        ])
+    }
+
+    const aoClicarResultadoPesquisa = (id) => {
+        console.log('aoClicarResultadoPesquisa', {id})        
+    }
+
     return(
         <header className='cabecalhoPrincipal'>
             <div className='conteudoCabecalhoPrincipal'>
@@ -27,13 +66,29 @@ export default function Cabecalho() {
                     <input
                         type='text'
                         placeholder='Pesquisar'
-                        value={''}
-                        onChange={() => console.log('pesquisando')}
+                        value={termoPesquisado}
+                        onChange={aoPesquisar}
                     />
                 </div>
 
                 <Navegacao className='desktop' />
             </div>
+
+            {resultadoPesquisa.length > 0 && (
+                <div className='resultadoPesquisaContainer'>
+                    {resultadoPesquisa.map(r => (
+                        <ResultadoPesquisa
+                            avatar={r.avatar}
+                            nome={r.nome}
+                            email={r.email}
+                            key={r._id}
+                            id={r._id}
+                            onClick={aoClicarResultadoPesquisa}
+                        />
+                    ))}
+                </div>
+            )}
+            
         </header>
     );
 }
