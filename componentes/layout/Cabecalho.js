@@ -4,43 +4,40 @@ import imagemLogoHorizontal from '../../public/imagens/logoHorizontal.svg'
 import imagemLupa from '../../public/imagens/lupa.svg'
 import Navegacao from './Navegacao';
 import ResultadoPesquisa from './ResultadoPesquisa';
+import UsuarioService from '../../services/UsuarioService';
+import { useRouter } from 'next/router';
+
+const usuarioService = new UsuarioService();
 
 export default function Cabecalho() {
     const [resultadoPesquisa, setResultadoPesquisa] = useState([]);
     const [termoPesquisado, setTermoPesquisado] = useState([]);
+    const router = useRouter();
 
-    const aoPesquisar = (e) => {
+    const aoPesquisar = async (e) => {
         setTermoPesquisado(e.target.value);
         setResultadoPesquisa([]);
 
-        if (termoPesquisado.length < 3) {
+        if (termoPesquisado.length < 2) {
             return;
         }
 
-        setResultadoPesquisa([
-            {
-                avatar: '',
-                nome: 'Eduardo',
-                email: 'eduardo@email.com',
-                _id: '12345'
-            },
-            {
-                avatar: '',
-                nome: 'Miguel',
-                email: 'miguel@email.com',
-                _id: '123456'
-            },
-            {
-                avatar: '',
-                nome: 'Ana Paula',
-                email: 'anapaul@email.com',
-                _id: '1234567'
-            }
-        ])
+        try {
+            const { data } = await usuarioService.pesquisar(termoPesquisado);
+            setResultadoPesquisa(data);
+        } catch (error) {
+            alert('Erro ao pesquisar usuario. ' + error?.response?.data?.erro);
+        }
     }
 
     const aoClicarResultadoPesquisa = (id) => {
-        console.log('aoClicarResultadoPesquisa', {id})        
+        setResultadoPesquisa([]);
+        setTermoPesquisado('');
+        router.push(`/perfil/${id}`);        
+    }
+
+    const redirecionarHome = () => {
+        router.push('/')
     }
 
     return(
@@ -48,6 +45,7 @@ export default function Cabecalho() {
             <div className='conteudoCabecalhoPrincipal'>
                 <div className='logoCabecalhoPrincipal'>
                     <Image
+                        onClick={() => redirecionarHome('home')}
                         src={imagemLogoHorizontal}
                         alt='logo devagram'
                         layout='fill'
