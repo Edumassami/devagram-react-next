@@ -1,8 +1,32 @@
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import Feed from "@/componentes/feed";
 import comAutorizacao from "@/hoc/comAutorizacao";
+import CabecalhoPerfil from "@/componentes/cabecalhoPerfil";
 
-function Perfil() {
+function Perfil({ usuarioLogado }) {
+    const [usuario,setUsuario] = useState ({});
+    const router = useRouter(); 
+
+    useEffect(() => {
+
+        const fetchData = async () => {
+
+        }
+        setUsuario({
+            nome: 'Eduardo Massami'
+        })
+
+        fetchData();
+    }, [router.query.id]);
     return (
-        <h1>Perfil</h1>
+        <div className="paginaPerfil"> 
+            <CabecalhoPerfil 
+                usuarioLogado={usuarioLogado}
+                usuario={usuario}
+            />
+            <Feed usuarioLogado={usuarioLogado} /> 
+        </div>
     );
 }
 
