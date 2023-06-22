@@ -1,7 +1,5 @@
 import Image from 'next/image'
 
-
-
 export default function CabecalhoComAcoes({
     className,
     iconeEsquerda, 
@@ -22,7 +20,7 @@ export default function CabecalhoComAcoes({
                 />
             ) : (
                 textoEsquerda !== null && (
-                    <span className="cabecalhoComAcoesTextoEsquerda"> onClick={}
+                    <span className="cabecalhoComAcoesTextoEsquerda"> onClick={aoClicarAcaoEsquerda}
                         {textoEsquerda}
                     </span>
                 )
