@@ -33,6 +33,10 @@ export default class UsuarioService extends HttpService {
         return this.get(`/pesquisa?id=${idUsuario}`);
     }
 
+    async alternarSeguir(idUsuario) {
+        return this.put(`/seguir?id=${idUsuario}`);
+    }
+
     obterInformacoesUsuarioLogado() {
         return {
             id: localStorage.getItem('id'),
