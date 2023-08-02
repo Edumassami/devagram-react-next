@@ -11,7 +11,7 @@ const usuarioService = new UsuarioService();
 
 export default function Cabecalho() {
     const [resultadoPesquisa, setResultadoPesquisa] = useState([]);
-    const [termoPesquisado, setTermoPesquisado] = useState([]);
+    const [termoPesquisado, setTermoPesquisado] = useState("");
     const router = useRouter();
 
     let cabecalhoClassName = '';
@@ -36,8 +36,8 @@ export default function Cabecalho() {
     }
 
     const aoClicarResultadoPesquisa = (id) => {
-        setResultadoPesquisa([]);
-        setTermoPesquisado('');
+        setResultadoPesquisa("");
+        setTermoPesquisado([]);
         router.push(`/perfil/${id}`);        
     }
 
@@ -50,7 +50,7 @@ export default function Cabecalho() {
             <div className='conteudoCabecalhoPrincipal'>
                 <div className='logoCabecalhoPrincipal'>
                     <Image
-                        onClick={() => redirecionarHome('home')}
+                        onClick={redirecionarHome}
                         src={imagemLogoHorizontal}
                         alt='logo devagram'
                         layout='fill'
@@ -76,10 +76,10 @@ export default function Cabecalho() {
 
                 <Navegacao className='desktop' />
             </div>
-
+            
             {resultadoPesquisa.length > 0 && (
                 <div className='resultadoPesquisaContainer'>
-                    {resultadoPesquisa.map(r => (
+                    {resultadoPesquisa.map((r) => (
                         <ResultadoPesquisa
                             avatar={r.avatar}
                             nome={r.nome}

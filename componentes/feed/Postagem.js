@@ -98,8 +98,8 @@ export default function Postagem({
         <div className="postagem">
             <Link href={`/perfil/${usuario.id}`}>
                 <section className="cabecalhoPostagem">
-                    <Avatar src={usuario.avatar} />
-                    <strong>{usuario.nome}</strong>
+                    <Avatar src={usuario?.avatar} />
+                    <strong>{usuario?.nome}</strong>
                 </section>
             </Link>
 
@@ -131,7 +131,7 @@ export default function Postagem({
                 </div>
 
                 <div className="descricaoPostagem">
-                    <strong className="nomeUsuario">{usuario.nome}</strong>
+                    <strong className="nomeUsuario">{usuario?.nome}</strong>
                     <p className="descricao">
                         {obterDescricao()}
                         {descricaoMaiorQueLimite() && (

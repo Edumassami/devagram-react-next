@@ -29,19 +29,22 @@ function Perfil({ usuarioLogado }) {
     }
 
     useEffect( () => {
-        if (!router?.query?.id) {
-            return;
-        }
+        
 
         const asyncObterPerfil = async() => {
-        const dadosPerfil = await obterPerfil(router?.query?.id);
-        setUsuario(dadosPerfil);
+            console.log('id', router.query.id);
+            if (!router?.query?.id) {
+                return;
+            }
+            const dadosPerfil = await obterPerfil(router?.query?.id);
+            setUsuario(dadosPerfil);
+            console.log('Estou dentro do ObterPerfil');
         }
         asyncObterPerfil();
-    }, [router?.query?.id]);
+    }, [ router?.query?.id ]);
 
     return (
-        <div className="paginaPerfil"> 
+        <div className="paginaPerfil">  
             <CabecalhoPerfil 
                 usuarioLogado={usuarioLogado}
                 usuario={usuario}
