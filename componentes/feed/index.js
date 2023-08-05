@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import Postagem from "./Postagem"
-import FeedService from "@/services/FeedService";
+import FeedService from "../../services/FeedService";
 
 const feedService = new FeedService();
 
-export default function Feed({ usuarioLogado, usuarioPerfil }) {
+function Feed({ 
+        usuarioLogado, 
+        usuarioPerfil
+    }) {
     const [listaDePostagens, setListaDePostagens] = useState([]);
 
     useEffect(() => {
@@ -18,8 +21,8 @@ export default function Feed({ usuarioLogado, usuarioPerfil }) {
                     id: postagem?._id,
                     usuario: {
                         id: postagem?.idUsuario,
-                        nome: postagem?.usuario?.nome || usuarioPerfil?.nome,
-                        avatar: postagem?.usuario?.avatar || usuarioPerfil?.avatar
+                        nome: usuarioPerfil?.nome || postagem.usuario?.nome,
+                        avatar: usuarioPerfil?.avatar || postagem.usuario?.avatar 
                     },
                     fotoPost: postagem?.foto,
                     descricao: postagem?.descricao,
@@ -37,7 +40,7 @@ export default function Feed({ usuarioLogado, usuarioPerfil }) {
 
         asyncPostagens();
 
-    }, [usuarioLogado, usuarioPerfil]);
+    }, [  usuarioLogado, usuarioPerfil   ]);
 
     if (!listaDePostagens.length) {
         return null;
@@ -60,3 +63,5 @@ export default function Feed({ usuarioLogado, usuarioPerfil }) {
         </div>
     );
 }
+
+export default Feed;

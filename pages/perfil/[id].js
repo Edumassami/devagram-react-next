@@ -52,7 +52,7 @@ function Perfil({ usuarioLogado }) {
             />
             <Feed 
                 usuarioLogado={usuarioLogado}
-                idUsuario={usuario?._id} 
+                usuarioPerfil={usuario} 
             /> 
         </div>
     );
