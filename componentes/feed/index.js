@@ -34,7 +34,6 @@ function Feed({
                 }
             ))
             setListaDePostagens(postagensFormatadas);
-            console.log(postagensFormatadas);
 
         };
 

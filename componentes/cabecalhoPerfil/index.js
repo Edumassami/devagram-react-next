@@ -1,7 +1,7 @@
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import Image from "next/image";
-import CabecalhoComAcoes from "@/componentes/cabecalhoComAcoes";
+import CabecalhoComAcoes from "../cabecalhoComAcoes";
 import Botao from "../botao";
 import Avatar from "../avatar";
 import UsuarioService from "@/services/UsuarioService";
@@ -20,16 +20,19 @@ export default function CabecalhoPerfil({
     const [quantidadeSeguidores, setQuantidadeSeguidores] = useState(0);
     const router = useRouter();
 
+    console.log(estaSeguindoUsuario);
+    console.log(usuario.seguidores);
+
     useEffect(() => {
-        if(!usuario) {
+       if(!usuario) {
             return;
         }
 
-        setEstaSeguindoUsuario(usuario?.segueEsseUsuario);
-        setQuantidadeSeguidores(usuario?.seguidores);
+        setEstaSeguindoUsuario(usuario.segueEsseUsuario);
+        setQuantidadeSeguidores(usuario.seguidores);
     }, [usuario]);
 
-    const obterTextoBotaoSeguir = () => {
+    const obterTextoBotaoPrincipal = () => {
 
         if(estaNoPerfilPessoal){
             return 'Editar perfil'
@@ -41,11 +44,16 @@ export default function CabecalhoPerfil({
         return 'Seguir';
     }
 
-    const obterCorBotaoSeguir = () => {
-        if(estaSeguindoUsuario || estaNoPerfilPessoal ) {
+    const obterCorBotaoPrincipal = () => {
+        if(estaNoPerfilPessoal){
+            return 'primaria'
+        }
+        
+        if (estaSeguindoUsuario) {
             return 'invertido';
         }
-
+        
+    
         return 'primaria'
     }
 
@@ -60,7 +68,7 @@ export default function CabecalhoPerfil({
                 estaSeguindoUsuario 
                 ? (quantidadeSeguidores - 1)
                 : (quantidadeSeguidores + 1)
-                )
+                );
             setEstaSeguindoUsuario(!estaSeguindoUsuario);
             } catch (error) {
             alert('Erro ao seguir/deixar de seguir');
@@ -96,32 +104,32 @@ export default function CabecalhoPerfil({
                 <CabecalhoComAcoes 
                     iconeEsquerda={estaNoPerfilPessoal ? null : imagemSetaEsquerda}
                     aoClicarAcaoEsquerda={aoClicarSetaEsquerda}
-                    titulo={usuario.nome}
+                    titulo={usuario?.nome}
                     elementoDireita={obterElementoDireitaCabecalho()}
                 />
 
             <hr className="linhaDivisoria" />
 
             <div className='statusPerfil'>
-                <Avatar src={usuario.avatar} />
+                <Avatar src={usuario?.avatar} />
                 <div className="informacoesPerfil">
                     <div className="statusContainer">
                         <div className="status"> 
-                            <strong>{usuario.publicacoes}</strong>
+                            <strong>{usuario?.publicacoes}</strong>
                             <span>Publicações</span>
                         </div>
                         <div className="status"> 
-                            <strong>{usuario.seguidores}</strong>
+                            <strong>{quantidadeSeguidores}</strong>
                             <span>Seguidores</span>
                         </div>
                         <div className="status"> 
-                            <strong>{usuario.seguindo}</strong>
+                            <strong>{usuario?.seguindo}</strong>
                             <span>Seguindo</span>
                         </div>
                     </div>
                     <Botao 
-                        texto={obterTextoBotaoSeguir()}
-                        cor={obterCorBotaoSeguir()}
+                        texto={obterTextoBotaoPrincipal()}
+                        cor={obterCorBotaoPrincipal()}
                         manipularClique={manipularCliqueBotaoPrincipal}
                     />
                 </div>  

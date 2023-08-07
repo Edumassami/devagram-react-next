@@ -28,7 +28,7 @@
                 width: 100%;
                 height: auto;
                 max-height: 360px;
-                object-fit: cover;
+                object-fit:cover;
             }
         }
 
@@ -113,6 +113,12 @@
             .avatar {
                 width: 42px;
                 height: 42px;
+            }
+
+            .fotoPostagem {
+                img {
+                    object-fit: scale-down;
+                }
             }
 
             .rodapeDaPostagem {

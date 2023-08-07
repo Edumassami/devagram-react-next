@@ -38,7 +38,6 @@ function Perfil({ usuarioLogado }) {
             }
             const dadosPerfil = await obterPerfil(router?.query?.id);
             setUsuario(dadosPerfil);
-            console.log('Estou dentro do ObterPerfil');
         }
         asyncObterPerfil();
     }, [ router?.query?.id ]);
