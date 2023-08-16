@@ -13,6 +13,7 @@ const usuarioService = new UsuarioService();
 
 export default function CabecalhoPerfil({
     usuario,
+    usuarioLogado,
     estaNoPerfilPessoal
 }) {
 
@@ -20,15 +21,16 @@ export default function CabecalhoPerfil({
     const [quantidadeSeguidores, setQuantidadeSeguidores] = useState(0);
     const router = useRouter();
 
-    console.log(estaSeguindoUsuario);
-    console.log(usuario.seguidores);
-
     useEffect(() => {
+        if(usuario?._id === usuarioLogado.id){
+            router?.push('eu')
+        }
+
        if(!usuario) {
             return;
         }
 
-        setEstaSeguindoUsuario(usuario.segueEsseUsuario);
+        setEstaSeguindoUsuario(usuario.sigoEsseUsuario);
         setQuantidadeSeguidores(usuario.seguidores);
     }, [usuario]);
 
@@ -45,11 +47,8 @@ export default function CabecalhoPerfil({
     }
 
     const obterCorBotaoPrincipal = () => {
-        if(estaNoPerfilPessoal){
-            return 'primaria'
-        }
         
-        if (estaSeguindoUsuario) {
+        if (estaSeguindoUsuario || estaNoPerfilPessoal) {
             return 'invertido';
         }
         
@@ -64,13 +63,14 @@ export default function CabecalhoPerfil({
 
         try{
             await usuarioService.alternarSeguir(usuario._id);
+
             setQuantidadeSeguidores(
                 estaSeguindoUsuario 
                 ? (quantidadeSeguidores - 1)
                 : (quantidadeSeguidores + 1)
                 );
             setEstaSeguindoUsuario(!estaSeguindoUsuario);
-            } catch (error) {
+        } catch (error) {
             alert('Erro ao seguir/deixar de seguir');
         }
     }

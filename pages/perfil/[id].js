@@ -32,12 +32,12 @@ function Perfil({ usuarioLogado }) {
         
 
         const asyncObterPerfil = async() => {
-            console.log('id', router.query.id);
             if (!router?.query?.id) {
                 return;
             }
             const dadosPerfil = await obterPerfil(router?.query?.id);
             setUsuario(dadosPerfil);
+            console.log(dadosPerfil);
         }
         asyncObterPerfil();
     }, [ router?.query?.id ]);
